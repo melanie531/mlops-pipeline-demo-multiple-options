@@ -136,7 +136,6 @@ data_final=data5.select("churn",
  'pastSenti_neg',
  'mth_remain')
 
-#processed_dir="s3://sagemaker-us-east-1-631450739534/DEMO-xgboost-churn/processed/"
 
 df_pandas = data_final.toPandas()
 val = df_pandas.sample(frac=0.2, axis=0)
