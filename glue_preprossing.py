@@ -14,11 +14,12 @@ sc = SparkContext()
 glueContext = GlueContext(sc)
 spark = glueContext.spark_session
 job = Job(glueContext)
-args = getResolvedOptions(sys.argv, ['JOB_NAME', 'PROCESSED_DIR'])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'PROCESSED_DIR', 'INPUT_DIR'])
 
 processed_dir = args['PROCESSED_DIR']
-job.init(args['JOB_NAME'], args)
+input_dir = args['INPUT_DIR']
 
+job.init(args['JOB_NAME'], args)
 
 #database = 'iris-database' #replace with your user id
 today = date.today()
@@ -26,7 +27,7 @@ logger = glueContext.get_logger()
 logger.info("info message")
 
 
-df= glueContext.create_dynamic_frame_from_options(format_options={"quoteChar": '"', "withHeader": True, "separator": ","},connection_type = "s3", connection_options = {"paths": ["s3://sagemaker-us-east-1-631450739534/DEMO-xgboost-churn/input/"]}, format = "csv")
+df= glueContext.create_dynamic_frame_from_options(format_options={"quoteChar": '"', "withHeader": True, "separator": ","},connection_type = "s3", connection_options = {"paths": [input_dir]}, format = "csv")
 
 df1 = df.toDF()
 #print(df1)

@@ -39,6 +39,7 @@ def lambda_handler(event, context):
         logger.info(event['body'])
         job_name = event['body']['targetJob']
         processed_dir = event['body']['processedDir']
+        input_dir = event['body']['inputDir']
         token = event['body']['token']
 
         # Submitting a new Glue Job
@@ -49,7 +50,8 @@ def lambda_handler(event, context):
                 '--job-bookmark-option': 'job-bookmark-enable',
                 '--additional-python-modules': 'pyarrow==2,awswrangler==2.9.0,fsspec==0.7.4',
                 # Custom arguments below
-                '--PROCESSED_DIR': processed_dir
+                '--PROCESSED_DIR': processed_dir,
+                '--INPUT_DIR': input_dir,
             },
             MaxCapacity=2.0
         )

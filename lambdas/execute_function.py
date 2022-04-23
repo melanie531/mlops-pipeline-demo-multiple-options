@@ -55,6 +55,7 @@ def lambda_handler(event, context):
             arguments = payload["arguments"]
             target_job = arguments["targetJob"]
             processed_dir = arguments["processedDir"]
+            input_dir = arguments['inputDir']
             sm_arn = arguments["stateMachineArn"]
             
             logger.info('Trigger execution of state machine [{}]'.format(sm_arn))
@@ -65,6 +66,7 @@ def lambda_handler(event, context):
                 'body': {
                     "targetJob": target_job,
                     "processedDir": processed_dir,
+                    'inputDir': input_dir,
                     "token": token
                 }
             }
